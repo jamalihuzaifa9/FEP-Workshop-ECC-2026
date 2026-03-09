@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FEP for Control Workshop · ECC 2026</title>
+<meta name="description" content="Free Energy Principle for Control: From Neural Dynamics to Robotic Embodiments — Half-day workshop at the 24th European Control Conference, Reykjavík, Iceland, July 2026." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  :root {
+    --bg: #0a0f1a;
+    --surface: #111827;
+    --surface-light: #1a2238;
+    --accent: #5eead4;
+    --accent-dim: rgba(94,234,212,0.12);
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --border: rgba(94,234,212,0.15);
+    --glacier: #78c8dc;
+    --lava: #f97316;
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+  body { font-family: var(--serif); background: var(--bg); color: var(--text); overflow-x: hidden; }
+  a { text-decoration: none; }
+
+  /* NAV */
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,15,26,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .nav-logo { font-family: var(--sans); font-size: 14px; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); text-transform: uppercase; }
+  .nav-links { display: flex; gap: 6px; list-style: none; align-items: center; }
+  .nav-links a, .nav-links button { font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--text-dim); background: transparent; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .nav-links a:hover, .nav-links button:hover { color: var(--accent); background: var(--accent-dim); }
+  .nav-links .active { color: var(--accent); background: var(--accent-dim); }
+  .nav-reg { color: var(--accent) !important; border: 1px solid var(--accent) !important; }
+  .hamburger { display: none; background: none; border: none; color: var(--text); font-size: 24px; cursor: pointer; padding: 8px; }
+  .mobile-menu { display: none; flex-direction: column; padding: 12px 24px 20px; gap: 4px; background: rgba(10,15,26,0.95); }
+  .mobile-menu a, .mobile-menu button { font-family: var(--sans); font-size: 14px; color: var(--text-dim); background: none; border: none; padding: 10px 14px; border-radius: 6px; cursor: pointer; text-align: left; display: block; width: 100%; }
+  .mobile-menu a:hover, .mobile-menu button:hover { color: var(--accent); background: var(--accent-dim); }
+  .mobile-menu.open { display: flex; }
+
+  /* SECTION */
+  .section { max-width: 1200px; margin: 0 auto; padding: 80px 24px; }
+  .section-border { border-top: 1px solid var(--border); }
+  .tag { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .tag-lava { color: var(--lava); }
+  h2 { font-size: clamp(28px, 4vw, 42px); font-weight: 400; line-height: 1.2; margin-bottom: 20px; }
+  .body-text { font-family: var(--sans); font-size: 16px; line-height: 1.7; color: var(--text-dim); max-width: 720px; }
+  .body-text p { margin-bottom: 20px; }
+  .body-text p:last-child { margin-bottom: 0; }
+
+  /* BUTTONS */
+  .btn { font-family: var(--sans); font-size: 14px; font-weight: 600; background: var(--accent); color: var(--bg); border: none; padding: 14px 32px; border-radius: 8px; cursor: pointer; letter-spacing: 0.02em; transition: all 0.2s; display: inline-block; }
+  .btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .btn-outline { font-family: var(--sans); font-size: 14px; font-weight: 600; background: transparent; color: var(--accent); border: 2px solid var(--accent); padding: 12px 30px; border-radius: 8px; cursor: pointer; letter-spacing: 0.02em; transition: all 0.2s; display: inline-block; }
+  .btn-outline:hover { background: var(--accent-dim); }
+  .btn-lg { font-size: 16px; padding: 16px 40px; }
+
+  /* HERO */
+  .hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; background: radial-gradient(ellipse at 30% 20%, rgba(94,234,212,0.08) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(120,200,220,0.06) 0%, transparent 50%), var(--bg); }
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .hero-content { position: relative; z-index: 2; }
+  .hero h1 { font-size: clamp(36px, 6vw, 72px); font-weight: 400; line-height: 1.08; margin-bottom: 8px; max-width: 900px; }
+  .hero h1 span { font-style: italic; color: var(--accent); }
+  .hero-sub { font-family: var(--sans); font-size: clamp(16px, 2vw, 22px); color: var(--text-dim); margin-bottom: 12px; max-width: 640px; }
+  .hero-meta { display: flex; gap: 24px; flex-wrap: wrap; font-family: var(--sans); font-size: 14px; color: var(--text-dim); margin: 28px 0 40px; }
+  .hero-meta span { display: flex; align-items: center; gap: 6px; }
+  .hero-meta .dot { color: var(--accent); }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  /* ABOUT */
+  .about-grid { display: flex; gap: 60px; align-items: flex-start; }
+  .about-main { flex: 1 1 60%; }
+  .about-side { flex: 1 1 35%; min-width: 280px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; transition: all 0.3s; }
+  .topic-item { font-family: var(--sans); font-size: 14px; color: var(--text); padding: 10px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .topic-item:last-child { border-bottom: none; }
+  .topic-dot { color: var(--accent); font-size: 8px; }
+
+  /* SPEAKERS */
+  .speakers-section { background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%); border-top: 1px solid var(--border); padding: 80px 0; }
+  .speakers-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .speakers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; margin-top: 40px; }
+  .speaker-card { cursor: pointer; }
+  .speaker-card:hover { border-color: rgba(94,234,212,0.4); }
+  .speaker-card.expanded { border-color: var(--accent); background: var(--surface-light); }
+  .speaker-header { display: flex; gap: 16px; align-items: center; margin-bottom: 16px; }
+  .speaker-avatar { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--sans); font-size: 18px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .speaker-name { font-family: var(--sans); font-size: 16px; font-weight: 600; color: var(--text); }
+  .speaker-aff { font-family: var(--sans); font-size: 13px; color: var(--text-dim); }
+  .speaker-time { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: 4px; }
+  .speaker-talk { font-style: italic; font-size: 17px; line-height: 1.4; color: var(--text); }
+  .speaker-bio { font-family: var(--sans); font-size: 14px; line-height: 1.65; color: var(--text-dim); border-top: 1px solid var(--border); padding-top: 16px; margin-top: 16px; display: none; }
+  .speaker-card.expanded .speaker-bio { display: block; }
+  .speaker-toggle { font-family: var(--sans); font-size: 12px; color: var(--accent); margin-top: 12px; opacity: 0.7; }
+
+  /* SCHEDULE */
+  .sched-row { display: flex; gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+  .sched-row:last-child { border-bottom: none; }
+  .sched-time { font-family: var(--sans); font-size: 14px; font-weight: 600; color: var(--accent); min-width: 120px; flex-shrink: 0; }
+  .sched-time.break { color: var(--lava); }
+  .sched-event { font-size: 17px; font-style: italic; color: var(--text); }
+  .sched-event.session { font-family: var(--sans); font-size: 15px; font-style: normal; }
+  .sched-event.break-ev { font-family: var(--sans); font-size: 15px; font-style: normal; font-weight: 500; color: var(--text-dim); }
+  .sched-speaker { font-family: var(--sans); font-size: 13px; color: var(--text-dim); margin-top: 4px; }
+
+  /* ORGANIZERS */
+  .org-section { background: var(--surface); border-top: 1px solid var(--border); padding: 80px 0; }
+  .org-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .org-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-top: 40px; }
+  .org-avatar { width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: var(--sans); font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+  .org-name { font-family: var(--sans); font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .org-role, .org-aff { font-family: var(--sans); font-size: 13px; color: var(--text-dim); margin-bottom: 2px; }
+  .org-aff { margin-bottom: 12px; }
+  .org-email { font-family: var(--sans); font-size: 13px; color: var(--accent); }
+
+  /* SPOTLIGHT */
+  .spotlight-card { background: linear-gradient(135deg, var(--surface-light), var(--surface)); border: 2px solid var(--accent); padding: 48px 40px; max-width: 800px; position: relative; overflow: hidden; }
+  .spotlight-card .glow { position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle, var(--accent-dim), transparent); pointer-events: none; }
+  .spotlight-card strong { color: var(--text); }
+  .spotlight-btns { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 28px; }
+
+  /* REGISTRATION CTA */
+  .reg-cta { text-align: center; }
+  .reg-cta .body-text { max-width: 520px; margin: 0 auto 32px; text-align: center; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
+  footer div { font-family: var(--sans); font-size: 13px; color: var(--text-dim); max-width: 1200px; margin: 0 auto; }
+  footer .ft-accent { color: var(--accent); font-weight: 600; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-up { animation: fadeUp 0.7s ease-out both; }
+  .fade-up-d1 { animation: fadeUp 0.7s 0.1s ease-out both; }
+  .fade-up-d2 { animation: fadeUp 0.7s 0.2s ease-out both; }
+  .fade-up-d3 { animation: fadeUp 0.7s 0.3s ease-out both; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none !important; }
+    .hamburger { display: block !important; }
+    .about-grid { flex-direction: column; }
+    .speakers-grid { grid-template-columns: 1fr; }
+    .org-grid { grid-template-columns: 1fr; }
+    .spotlight-card { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">ECC 2026 · FEP Workshop</div>
+    <ul class="nav-links" id="navLinks">
+      <li><button onclick="scrollToId('home')" data-section="home">Home</button></li>
+      <li><button onclick="scrollToId('about')" data-section="about">About</button></li>
+      <li><button onclick="scrollToId('speakers')" data-section="speakers">Speakers & Talks</button></li>
+      <li><button onclick="scrollToId('schedule')" data-section="schedule">Schedule</button></li>
+      <li><button onclick="scrollToId('organizers')" data-section="organizers">Organizers</button></li>
+      <li><button onclick="scrollToId('spotlight')" data-section="spotlight">Call for Spotlights</button></li>
+      <li><a href="https://ecc26.euca-ecc.org/conference-registration/" target="_blank" rel="noopener" class="nav-reg">Register ↗</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <button onclick="scrollToId('home')">Home</button>
+    <button onclick="scrollToId('about')">About</button>
+    <button onclick="scrollToId('speakers')">Speakers & Talks</button>
+    <button onclick="scrollToId('schedule')">Schedule</button>
+    <button onclick="scrollToId('organizers')">Organizers</button>
+    <button onclick="scrollToId('spotlight')">Call for Spotlights</button>
+    <a href="https://ecc26.euca-ecc.org/conference-registration/" target="_blank" rel="noopener">Register ↗</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <canvas id="neuralCanvas"></canvas>
+  <div class="section hero-content" style="padding-top: 120px;">
+    <div class="tag fade-up">24th European Control Conference · Reykjavík, Iceland</div>
+    <h1 class="fade-up-d1">Free Energy Principle<br><span>for Control</span></h1>
+    <p class="hero-sub fade-up-d2">From Neural Dynamics to Robotic Embodiments</p>
+    <div class="hero-meta fade-up-d2">
+      <span><span class="dot">◆</span> 7–10 July 2026</span>
+      <span><span class="dot">◆</span> Half-Day Workshop</span>
+      <span><span class="dot">◆</span> University of Iceland</span>
+    </div>
+    <div class="hero-btns fade-up-d3">
+      <a href="https://ecc26.euca-ecc.org/conference-registration/" target="_blank" rel="noopener" class="btn">Register for ECC 2026</a>
+      <button class="btn-outline" onclick="scrollToId('spotlight')">Submit a Spotlight</button>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section section-border">
+  <div class="about-grid">
+    <div class="about-main">
+      <div class="tag">About the Workshop</div>
+      <h2>Bridging Neuroscience, Control Theory & Robotics</h2>
+      <div class="body-text">
+        <p>The Free Energy Principle (FEP) from computational neuroscience suggests that natural agents make decisions by creating a model of the world and minimizing surprise between data received from the environment and this internal model. It provides a unified framework for perception, action, and learning by minimizing variational free energy.</p>
+        <p>This half-day workshop explores the application of the FEP and active inference to control, emphasizing the connection between neural dynamics and robotic embodiments. We investigate how FEP-based controllers can handle uncertainty, enable compliance and safe interaction, and learn from demonstrations.</p>
+        <p>Participants will gain both conceptual understanding and practical insights for implementing FEP controllers on real control systems. No prior knowledge of the Free Energy Principle is assumed.</p>
+      </div>
+    </div>
+    <div class="about-side">
+      <div class="card" style="background: var(--surface-light);">
+        <div class="tag" style="margin-bottom: 20px;">Key Topics</div>
+        <div class="topic-item"><span class="topic-dot">●</span> Variational inference for state estimation</div>
+        <div class="topic-item"><span class="topic-dot">●</span> Active inference for motion planning</div>
+        <div class="topic-item"><span class="topic-dot">●</span> Distributionally robust formulations</div>
+        <div class="topic-item"><span class="topic-dot">●</span> Impedance control for human-robot interaction</div>
+        <div class="topic-item"><span class="topic-dot">●</span> Neural dynamics & biologically plausible networks</div>
+        <div class="topic-item" style="border-bottom: none;"><span class="topic-dot">●</span> Connections to MPC & inverse optimal control</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPEAKERS -->
+<section id="speakers" class="speakers-section">
+  <div class="speakers-inner">
+    <div class="tag">Invited Speakers & Talks</div>
+    <h2>Five Perspectives on the FEP</h2>
+    <div class="speakers-grid" id="speakersGrid"></div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section id="schedule" class="section section-border">
+  <div class="tag">Programme</div>
+  <h2>Workshop Schedule</h2>
+  <p class="body-text" style="margin-bottom: 40px;">Half-day workshop (approximately 4 hours). The schedule may be adapted to morning or afternoon slots.</p>
+  <div style="max-width: 800px;" id="scheduleList"></div>
+</section>
+
+<!-- ORGANIZERS -->
+<section id="organizers" class="org-section">
+  <div class="org-inner">
+    <div class="tag">Workshop Organizers</div>
+    <h2>Meet the Team</h2>
+    <div class="org-grid" id="orgGrid"></div>
+  </div>
+</section>
+
+<!-- SPOTLIGHT -->
+<section id="spotlight" class="section section-border">
+  <div class="card spotlight-card">
+    <div class="glow"></div>
+    <div class="tag tag-lava" style="margin-bottom: 16px;">Call for Spotlight Presentations</div>
+    <h2 style="font-size: clamp(24px, 3.5vw, 36px);">Students & Early-Career Researchers</h2>
+    <div class="body-text">
+      <p>We invite graduate students and early-career researchers to submit abstracts for spotlight presentations during the concluding session of the workshop (12:30–13:00). This is an excellent opportunity to present your work on topics related to the Free Energy Principle, active inference, neural dynamics, or their applications to robotics and control.</p>
+      <p><strong>Submission format:</strong> Extended abstract (1–2 pages) describing the contribution, including preliminary results where applicable.</p>
+      <p><strong>Topics of interest include:</strong> Variational inference for state estimation, active inference for planning, FEP-based robot control, neural circuit models, distributionally robust control, impedance control under uncertainty, learning from demonstration via FEP, and connections between FEP and established control paradigms.</p>
+      <p><strong>Submission deadline:</strong> TBA — Please check back or contact the organizers for updates.</p>
+    </div>
+    <div class="spotlight-btns">
+      <a href="mailto:hj3000@nyu.edu?subject=ECC2026%20FEP%20Workshop%20-%20Spotlight%20Submission&body=Dear%20Organizers%2C%0D%0A%0D%0AI%20would%20like%20to%20submit%20a%20spotlight%20presentation%20for%20the%20FEP%20for%20Control%20workshop%20at%20ECC%202026.%0D%0A%0D%0ATitle%3A%0D%0AAuthors%3A%0D%0AAffiliation%3A%0D%0A%0D%0APlease%20find%20the%20extended%20abstract%20attached.%0D%0A%0D%0ABest%20regards%2C" class="btn">Submit Your Abstract</a>
+      <a href="mailto:hj3000@nyu.edu?subject=ECC2026%20FEP%20Workshop%20Inquiry" class="btn-outline">Contact Organizers</a>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTRATION CTA -->
+<section class="section section-border reg-cta">
+  <div class="tag">Registration</div>
+  <h2 style="max-width: 600px; margin: 0 auto 16px;">Join Us in Reykjavík</h2>
+  <p class="body-text">Registration for the workshop is handled through the main ECC 2026 conference registration system. We expect 40–60 attendees.</p>
+  <a href="https://ecc26.euca-ecc.org/conference-registration/" target="_blank" rel="noopener" class="btn btn-lg">Register at ECC 2026 ↗</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div style="margin-bottom: 8px;"><span class="ft-accent">FEP for Control Workshop</span> · ECC 2026 · 24th European Control Conference</div>
+    <div>7–10 July 2026 · Reykjavík, Iceland · University of Iceland</div>
+  </div>
+</footer>
+
+<script>
+// DATA
+const speakers = [
+  { name:"Rodolphe Sepulchre", role:"Professor of Engineering", aff:"KU Leuven & University of Cambridge", talk:"A Neuromorphic Architecture for Event-based Interaction", time:"09:30 – 10:00", bio:"Fellow of IFAC, IEEE, and SIAM. Recipient of the IEEE CSS Antonio Ruberti Young Researcher Prize (2008) and IEEE CSS George S. Axelby Outstanding Paper Award (2020). Elected to the Royal Academy of Belgium (2013). Former Editor-in-Chief of IEEE Control Systems (2020–2024). Recipient of two ERC Advanced Grants and coordinator of the MSCA network ELEVATE (2026–2030).", initials:"RS" },
+  { name:"Francesca Rossi", role:"PhD Student (MERC)", aff:"Scuola Superiore Meridionale, Naples", talk:"Neural Policy Composition from Free Energy Minimization", time:"10:00 – 10:30", bio:"Graduated in Automation and Robotics Engineering from the University of Naples Federico II (2023). Her project focuses on designing novel and resilient architectures for efficient decision-making, supervised by Prof. Giovanni Russo and Prof. Mario di Bernardo. Research interests include control systems, convex optimization, and machine learning.", initials:"FR" },
+  { name:"Veronica Centorrino", role:"Postdoctoral Researcher", aff:"ETH Zürich", talk:"Towards a Top-Down Normative Framework for Biologically Plausible Neural Circuit Models", time:"11:00 – 11:30", bio:"Working with Prof. John Lygeros at ETH Zürich. PhD in Modeling and Engineering Risk and Complexity (MERC) from Scuola Superiore Meridionale. Former visiting scholar at UC Santa Barbara's Center for Control, Dynamical Systems, and Computation. Research interests include robust nonlinear control, optimization, and bio-inspired neural networks.", initials:"VC" },
+  { name:"Hozefa Jesawada", role:"Postdoctoral Researcher", aff:"New York University Abu Dhabi", talk:"Distributionally Robust Free-Energy Minimization for Robotic Embodiments", time:"11:30 – 12:00", bio:"Works at the intersection of control theory, machine learning, and robotics. Research focuses on learning-based control methods, inverse optimal control, and formal safety guarantees for robotic systems. Bridges computational neuroscience principles with practical robotic manipulation.", initials:"HJ" },
+  { name:"Angelo Cangelosi", role:"Professor of ML & Robotics", aff:"University of Manchester", talk:"Cognitive Robotics: From Babies to Robots and AI", time:"12:00 – 12:30", bio:"Co-director and founder of the Manchester Centre for Robotics and AI. ERC Advanced grant recipient. Over £40m in research grants secured. 300+ scientific publications. Editor-in-Chief of Interaction Studies. Author of 'Developmental Robotics' (MIT Press, 2015) and 'Cognitive Robotics' (MIT Press, 2022).", initials:"AC" }
+];
+
+const schedule = [
+  { time:"09:00 – 09:30", event:"Opening Remarks", type:"session" },
+  { time:"09:30 – 10:00", event:"A Neuromorphic Architecture for Event-based Interaction", speaker:"Rodolphe Sepulchre", type:"talk" },
+  { time:"10:00 – 10:30", event:"Neural Policy Composition from Free Energy Minimization", speaker:"Francesca Rossi", type:"talk" },
+  { time:"10:30 – 11:00", event:"Coffee Break", type:"break" },
+  { time:"11:00 – 11:30", event:"Towards a Top-Down Normative Framework for Biologically Plausible Neural Circuit Models", speaker:"Veronica Centorrino", type:"talk" },
+  { time:"11:30 – 12:00", event:"Distributionally Robust Free-Energy Minimization for Robotic Embodiments", speaker:"Hozefa Jesawada", type:"talk" },
+  { time:"12:00 – 12:30", event:"Cognitive Robotics: From Babies to Robots and AI", speaker:"Angelo Cangelosi", type:"talk" },
+  { time:"12:30 – 13:00", event:"Spotlight Session & Concluding Remarks", type:"session" }
+];
+
+const organizers = [
+  { name:"Hozefa Jesawada", role:"Postdoctoral Researcher", aff:"New York University Abu Dhabi", email:"hj3000@nyu.edu", initials:"HJ" },
+  { name:"Abdalla Swikir", role:"Assistant Professor of Robotics", aff:"Mohamed bin Zayed University of AI", email:"abdalla.swikir@mbzuai.ae", initials:"AS" },
+  { name:"Fares Abu-Dakka", role:"Assistant Professor", aff:"New York University Abu Dhabi", email:"fa2656@nyu.edu", initials:"FA" },
+  { name:"Giovanni Russo", role:"Associate Professor", aff:"University of Salerno", email:"giovarusso@unisa.it", initials:"GR" }
+];
+
+// COLORS FOR AVATARS
+const palette = ["#5eead4","#78c8dc","#f97316","#a78bfa","#fb7185","#fbbf24"];
+function avatarColor(name) {
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = ((h << 5) - h + name.charCodeAt(i)) | 0;
+  return palette[Math.abs(h) % palette.length];
+}
+
+// RENDER SPEAKERS
+const speakersGrid = document.getElementById('speakersGrid');
+speakers.forEach((sp, i) => {
+  const col = avatarColor(sp.name);
+  const div = document.createElement('div');
+  div.className = 'card speaker-card';
+  div.innerHTML = `
+    <div class="speaker-header">
+      <div class="speaker-avatar" style="background: linear-gradient(135deg, ${col}, var(--bg));">${sp.initials}</div>
+      <div>
+        <div class="speaker-name">${sp.name}</div>
+        <div class="speaker-aff">${sp.role}, ${sp.aff}</div>
+      </div>
+    </div>
+    <div class="speaker-time">${sp.time}</div>
+    <div class="speaker-talk">${sp.talk}</div>
+    <div class="speaker-bio">${sp.bio}</div>
+    <div class="speaker-toggle">Click to read bio ▼</div>
+  `;
+  div.addEventListener('click', () => {
+    const wasExpanded = div.classList.contains('expanded');
+    document.querySelectorAll('.speaker-card').forEach(c => {
+      c.classList.remove('expanded');
+      c.querySelector('.speaker-toggle').textContent = 'Click to read bio ▼';
+    });
+    if (!wasExpanded) {
+      div.classList.add('expanded');
+      div.querySelector('.speaker-toggle').textContent = 'Click to collapse ▲';
+    }
+  });
+  speakersGrid.appendChild(div);
+});
+
+// RENDER SCHEDULE
+const scheduleList = document.getElementById('scheduleList');
+schedule.forEach((item, i) => {
+  const div = document.createElement('div');
+  div.className = 'sched-row';
+  const timeClass = item.type === 'break' ? 'sched-time break' : 'sched-time';
+  const evClass = item.type === 'talk' ? 'sched-event' : item.type === 'break' ? 'sched-event break-ev' : 'sched-event session';
+  div.innerHTML = `
+    <div class="${timeClass}">${item.time}</div>
+    <div>
+      <div class="${evClass}">${item.event}</div>
+      ${item.speaker ? `<div class="sched-speaker">${item.speaker}</div>` : ''}
+    </div>
+  `;
+  scheduleList.appendChild(div);
+});
+
+// RENDER ORGANIZERS
+const orgGrid = document.getElementById('orgGrid');
+organizers.forEach(o => {
+  const col = avatarColor(o.name);
+  const div = document.createElement('div');
+  div.className = 'card';
+  div.innerHTML = `
+    <div class="org-avatar" style="background: linear-gradient(135deg, ${col}, var(--bg));">${o.initials}</div>
+    <div class="org-name">${o.name}</div>
+    <div class="org-role">${o.role}</div>
+    <div class="org-aff">${o.aff}</div>
+    <a href="mailto:${o.email}" class="org-email">${o.email}</a>
+  `;
+  orgGrid.appendChild(div);
+});
+
+// NAVIGATION
+function scrollToId(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.querySelector('.hamburger').textContent = '☰';
+}
+
+function toggleMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const btn = document.querySelector('.hamburger');
+  menu.classList.toggle('open');
+  btn.textContent = menu.classList.contains('open') ? '✕' : '☰';
+}
+
+// ACTIVE NAV TRACKING
+window.addEventListener('scroll', () => {
+  const sections = ['home','about','speakers','schedule','organizers','spotlight'];
+  const scrollY = window.scrollY + 120;
+  let current = 'home';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.offsetTop <= scrollY) current = id;
+  });
+  document.querySelectorAll('#navLinks button[data-section]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.section === current);
+  });
+});
+
+// NEURAL CANVAS ANIMATION
+(function() {
+  const canvas = document.getElementById('neuralCanvas');
+  const ctx = canvas.getContext('2d');
+  let nodes = [];
+  function resize() {
+    canvas.width = canvas.offsetWidth * 2;
+    canvas.height = canvas.offsetHeight * 2;
+    ctx.setTransform(2, 0, 0, 2, 0, 0);
+    nodes = Array.from({ length: 40 }, () => ({
+      x: Math.random() * canvas.offsetWidth,
+      y: Math.random() * canvas.offsetHeight,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 2 + 1
+    }));
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  function draw() {
+    ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+    nodes.forEach(n => {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > canvas.offsetWidth) n.vx *= -1;
+      if (n.y < 0 || n.y > canvas.offsetHeight) n.vy *= -1;
+    });
+    nodes.forEach((a, i) => {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const b = nodes[j];
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < 140) {
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(120,200,220,${0.15 * (1 - d / 140)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+      ctx.beginPath();
+      ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(120,200,220,0.35)';
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
