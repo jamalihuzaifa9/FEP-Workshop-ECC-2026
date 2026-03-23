@@ -127,6 +127,17 @@
   .reg-cta { text-align: center; }
   .reg-cta .body-text { max-width: 520px; margin: 0 auto 32px; text-align: center; }
 
+  /* ECC LOGO */
+  .ecc-logo { height: 60px; margin-bottom: 28px; }
+  .ecc-logo-nav { height: 28px; margin-right: 12px; vertical-align: middle; }
+  .hero-logos { display: flex; align-items: center; gap: 20px; margin-bottom: 32px; }
+  .hero-logos img { height: 56px; }
+
+  /* PHOTO AVATARS */
+  .speaker-avatar img, .org-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+  .speaker-avatar { border-radius: 50%; overflow: hidden; }
+  .org-avatar { overflow: hidden; }
+
   /* FOOTER */
   footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
   footer div { font-family: var(--sans); font-size: 13px; color: var(--text-dim); max-width: 1200px; margin: 0 auto; }
@@ -155,7 +166,7 @@
 <!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
-    <div class="nav-logo">ECC 2026 · FEP Workshop</div>
+    <div class="nav-logo"><img src="https://ecc26.euca-ecc.org/wp-content/uploads/ecc26.svg" alt="ECC26" class="ecc-logo-nav" onerror="this.style.display='none'"> FEP Workshop</div>
     <ul class="nav-links" id="navLinks">
       <li><button onclick="scrollToId('home')" data-section="home">Home</button></li>
       <li><button onclick="scrollToId('about')" data-section="about">About</button></li>
@@ -182,6 +193,9 @@
 <section class="hero" id="home">
   <canvas id="neuralCanvas"></canvas>
   <div class="section hero-content" style="padding-top: 120px;">
+    <div class="hero-logos fade-up">
+      <img src="https://ecc26.euca-ecc.org/wp-content/uploads/ecc26.svg" alt="ECC 2026 Logo" class="ecc-logo" onerror="this.style.display='none'">
+    </div>
     <div class="tag fade-up">24th European Control Conference · Reykjavík, Iceland</div>
     <h1 class="fade-up-d1">Free Energy Principle<br><span>for Control</span></h1>
     <p class="hero-sub fade-up-d2">From Neural Dynamics to Robotic Embodiments</p>
@@ -262,8 +276,8 @@
       <p><strong>Submission deadline:</strong> TBA — Please check back or contact the organizers for updates.</p>
     </div>
     <div class="spotlight-btns">
-      <a href="mailto:hj3000@nyu.edu?subject=ECC2026%20FEP%20Workshop%20-%20Spotlight%20Submission&body=Dear%20Organizers%2C%0D%0A%0D%0AI%20would%20like%20to%20submit%20a%20spotlight%20presentation%20for%20the%20FEP%20for%20Control%20workshop%20at%20ECC%202026.%0D%0A%0D%0ATitle%3A%0D%0AAuthors%3A%0D%0AAffiliation%3A%0D%0A%0D%0APlease%20find%20the%20extended%20abstract%20attached.%0D%0A%0D%0ABest%20regards%2C" class="btn">Submit Your Abstract</a>
-      <a href="mailto:hj3000@nyu.edu?subject=ECC2026%20FEP%20Workshop%20Inquiry" class="btn-outline">Contact Organizers</a>
+      <a href="/cdn-cgi/l/email-protection#c1a9abf2f1f1f181afb8b4efa4a5b4feb2b4a3aba4a2b5fc848282f3f1f3f7e4f3f1878491e4f3f196aeb3aab2a9aeb1e4f3f1ece4f3f192b1aeb5ada8a6a9b5e4f3f192b4a3aca8b2b2a8aeafe7a3aea5b8fc85a4a0b3e4f3f18eb3a6a0afa8bba4b3b2e4f382e4f185e4f180e4f185e4f18088e4f3f1b6aeb4ada5e4f3f1ada8aaa4e4f3f1b5aee4f3f1b2b4a3aca8b5e4f3f1a0e4f3f1b2b1aeb5ada8a6a9b5e4f3f1b1b3a4b2a4afb5a0b5a8aeafe4f3f1a7aeb3e4f3f1b5a9a4e4f3f1878491e4f3f1a7aeb3e4f3f182aeafb5b3aeade4f3f1b6aeb3aab2a9aeb1e4f3f1a0b5e4f3f1848282e4f3f1f3f1f3f7efe4f185e4f180e4f185e4f18095a8b5ada4e4f280e4f185e4f18080b4b5a9aeb3b2e4f280e4f185e4f18080a7a7a8ada8a0b5a8aeafe4f280e4f185e4f180e4f185e4f18091ada4a0b2a4e4f3f1a7a8afa5e4f3f1b5a9a4e4f3f1a4b9b5a4afa5a4a5e4f3f1a0a3b2b5b3a0a2b5e4f3f1a0b5b5a0a2a9a4a5efe4f185e4f180e4f185e4f18083a4b2b5e4f3f1b3a4a6a0b3a5b2e4f382" class="btn">Submit Your Abstract</a>
+      <a href="/cdn-cgi/l/email-protection#21494b12111111614f58540f4445541e5254434b4442551c64626213111317041311676471041311764e534a52494e51041311684f5054485358" class="btn-outline">Contact Organizers</a>
     </div>
   </div>
 </section>
@@ -279,19 +293,20 @@
 <!-- FOOTER -->
 <footer>
   <div>
+    <img src="https://ecc26.euca-ecc.org/wp-content/uploads/ecc26-blue.svg" alt="ECC26" style="height: 40px; margin-bottom: 16px; opacity: 0.7;" onerror="this.style.display='none'">
     <div style="margin-bottom: 8px;"><span class="ft-accent">FEP for Control Workshop</span> · ECC 2026 · 24th European Control Conference</div>
     <div>7–10 July 2026 · Reykjavík, Iceland · University of Iceland</div>
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // DATA
 const speakers = [
-  { name:"Rodolphe Sepulchre", role:"Professor of Engineering", aff:"KU Leuven & University of Cambridge", talk:"A Neuromorphic Architecture for Event-based Interaction", time:"09:30 – 10:00", bio:"Fellow of IFAC, IEEE, and SIAM. Recipient of the IEEE CSS Antonio Ruberti Young Researcher Prize (2008) and IEEE CSS George S. Axelby Outstanding Paper Award (2020). Elected to the Royal Academy of Belgium (2013). Former Editor-in-Chief of IEEE Control Systems (2020–2024). Recipient of two ERC Advanced Grants and coordinator of the MSCA network ELEVATE (2026–2030).", initials:"RS" },
-  { name:"Francesca Rossi", role:"PhD Student (MERC)", aff:"Scuola Superiore Meridionale, Naples", talk:"Neural Policy Composition from Free Energy Minimization", time:"10:00 – 10:30", bio:"Graduated in Automation and Robotics Engineering from the University of Naples Federico II (2023). Her project focuses on designing novel and resilient architectures for efficient decision-making, supervised by Prof. Giovanni Russo and Prof. Mario di Bernardo. Research interests include control systems, convex optimization, and machine learning.", initials:"FR" },
-  { name:"Veronica Centorrino", role:"Postdoctoral Researcher", aff:"ETH Zürich", talk:"Towards a Top-Down Normative Framework for Biologically Plausible Neural Circuit Models", time:"11:00 – 11:30", bio:"Working with Prof. John Lygeros at ETH Zürich. PhD in Modeling and Engineering Risk and Complexity (MERC) from Scuola Superiore Meridionale. Former visiting scholar at UC Santa Barbara's Center for Control, Dynamical Systems, and Computation. Research interests include robust nonlinear control, optimization, and bio-inspired neural networks.", initials:"VC" },
-  { name:"Hozefa Jesawada", role:"Postdoctoral Researcher", aff:"New York University Abu Dhabi", talk:"Distributionally Robust Free-Energy Minimization for Robotic Embodiments", time:"11:30 – 12:00", bio:"Works at the intersection of control theory, machine learning, and robotics. Research focuses on learning-based control methods, inverse optimal control, and formal safety guarantees for robotic systems. Bridges computational neuroscience principles with practical robotic manipulation.", initials:"HJ" },
-  { name:"Angelo Cangelosi", role:"Professor of ML & Robotics", aff:"University of Manchester", talk:"Cognitive Robotics: From Babies to Robots and AI", time:"12:00 – 12:30", bio:"Co-director and founder of the Manchester Centre for Robotics and AI. ERC Advanced grant recipient. Over £40m in research grants secured. 300+ scientific publications. Editor-in-Chief of Interaction Studies. Author of 'Developmental Robotics' (MIT Press, 2015) and 'Cognitive Robotics' (MIT Press, 2022).", initials:"AC" }
+  { name:"Rodolphe Sepulchre", role:"Professor of Engineering", aff:"KU Leuven & University of Cambridge", talk:"A Neuromorphic Architecture for Event-based Interaction", time:"09:30 – 10:00", bio:"Fellow of IFAC, IEEE, and SIAM. Recipient of the IEEE CSS Antonio Ruberti Young Researcher Prize (2008) and IEEE CSS George S. Axelby Outstanding Paper Award (2020). Elected to the Royal Academy of Belgium (2013). Former Editor-in-Chief of IEEE Control Systems (2020–2024). Recipient of two ERC Advanced Grants and coordinator of the MSCA network ELEVATE (2026–2030).", initials:"RS", img:"images/rodolphe-sepulchre.jpg" },
+  { name:"Francesca Rossi", role:"PhD Student (MERC)", aff:"Scuola Superiore Meridionale, Naples", talk:"Neural Policy Composition from Free Energy Minimization", time:"10:00 – 10:30", bio:"Graduated in Automation and Robotics Engineering from the University of Naples Federico II (2023). Her project focuses on designing novel and resilient architectures for efficient decision-making, supervised by Prof. Giovanni Russo and Prof. Mario di Bernardo. Research interests include control systems, convex optimization, and machine learning.", initials:"FR", img:"images/francesca-rossi.jpg" },
+  { name:"Veronica Centorrino", role:"Postdoctoral Researcher", aff:"ETH Zürich", talk:"Towards a Top-Down Normative Framework for Biologically Plausible Neural Circuit Models", time:"11:00 – 11:30", bio:"Working with Prof. John Lygeros at ETH Zürich. PhD in Modeling and Engineering Risk and Complexity (MERC) from Scuola Superiore Meridionale. Former visiting scholar at UC Santa Barbara's Center for Control, Dynamical Systems, and Computation. Research interests include robust nonlinear control, optimization, and bio-inspired neural networks.", initials:"VC", img:"images/veronica-centorrino.jpg" },
+  { name:"Hozefa Jesawada", role:"Postdoctoral Researcher", aff:"New York University Abu Dhabi", talk:"Distributionally Robust Free-Energy Minimization for Robotic Embodiments", time:"11:30 – 12:00", bio:"Works at the intersection of control theory, machine learning, and robotics. Research focuses on learning-based control methods, inverse optimal control, and formal safety guarantees for robotic systems. Bridges computational neuroscience principles with practical robotic manipulation.", initials:"HJ", img:"images/hozefa-jesawada.jpg" },
+  { name:"Angelo Cangelosi", role:"Professor of ML & Robotics", aff:"University of Manchester", talk:"Cognitive Robotics: From Babies to Robots and AI", time:"12:00 – 12:30", bio:"Co-director and founder of the Manchester Centre for Robotics and AI. ERC Advanced grant recipient. Over £40m in research grants secured. 300+ scientific publications. Editor-in-Chief of Interaction Studies. Author of 'Developmental Robotics' (MIT Press, 2015) and 'Cognitive Robotics' (MIT Press, 2022).", initials:"AC", img:"images/angelo-cangelosi.jpg" }
 ];
 
 const schedule = [
@@ -306,10 +321,10 @@ const schedule = [
 ];
 
 const organizers = [
-  { name:"Hozefa Jesawada", role:"Postdoctoral Researcher", aff:"New York University Abu Dhabi", email:"hj3000@nyu.edu", initials:"HJ" },
-  { name:"Abdalla Swikir", role:"Assistant Professor of Robotics", aff:"Mohamed bin Zayed University of AI", email:"abdalla.swikir@mbzuai.ae", initials:"AS" },
-  { name:"Fares Abu-Dakka", role:"Assistant Professor", aff:"New York University Abu Dhabi", email:"fa2656@nyu.edu", initials:"FA" },
-  { name:"Giovanni Russo", role:"Associate Professor", aff:"University of Salerno", email:"giovarusso@unisa.it", initials:"GR" }
+  { name:"Hozefa Jesawada", role:"Postdoctoral Researcher", aff:"New York University Abu Dhabi", email:"hj3000@nyu.edu", initials:"HJ", img:"images/hozefa-jesawada.jpg" },
+  { name:"Abdalla Swikir", role:"Assistant Professor of Robotics", aff:"Mohamed bin Zayed University of AI", email:"abdalla.swikir@mbzuai.ae", initials:"AS", img:"images/abdalla-swikir.jpg" },
+  { name:"Fares Abu-Dakka", role:"Assistant Professor", aff:"New York University Abu Dhabi", email:"fa2656@nyu.edu", initials:"FA", img:"images/fares-abu-dakka.jpg" },
+  { name:"Giovanni Russo", role:"Associate Professor", aff:"University of Salerno", email:"giovarusso@unisa.it", initials:"GR", img:"images/giovanni-russo.jpg" }
 ];
 
 // COLORS FOR AVATARS
@@ -328,7 +343,9 @@ speakers.forEach((sp, i) => {
   div.className = 'card speaker-card';
   div.innerHTML = `
     <div class="speaker-header">
-      <div class="speaker-avatar" style="background: linear-gradient(135deg, ${col}, var(--bg));">${sp.initials}</div>
+      <div class="speaker-avatar" style="background: linear-gradient(135deg, ${col}, var(--bg));">
+        <img src="${sp.img}" alt="${sp.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='${sp.initials}';">
+      </div>
       <div>
         <div class="speaker-name">${sp.name}</div>
         <div class="speaker-aff">${sp.role}, ${sp.aff}</div>
@@ -377,7 +394,9 @@ organizers.forEach(o => {
   const div = document.createElement('div');
   div.className = 'card';
   div.innerHTML = `
-    <div class="org-avatar" style="background: linear-gradient(135deg, ${col}, var(--bg));">${o.initials}</div>
+    <div class="org-avatar" style="background: linear-gradient(135deg, ${col}, var(--bg));">
+      <img src="${o.img}" alt="${o.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='${o.initials}';">
+    </div>
     <div class="org-name">${o.name}</div>
     <div class="org-role">${o.role}</div>
     <div class="org-aff">${o.aff}</div>
@@ -441,27 +460,4 @@ window.addEventListener('scroll', () => {
       if (n.y < 0 || n.y > canvas.offsetHeight) n.vy *= -1;
     });
     nodes.forEach((a, i) => {
-      for (let j = i + 1; j < nodes.length; j++) {
-        const b = nodes[j];
-        const d = Math.hypot(a.x - b.x, a.y - b.y);
-        if (d < 140) {
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = `rgba(120,200,220,${0.15 * (1 - d / 140)})`;
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-      }
-      ctx.beginPath();
-      ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(120,200,220,0.35)';
-      ctx.fill();
-    });
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-</script>
-</body>
-</html>
+      for (le
