@@ -275,10 +275,7 @@
       <p><strong>Topics of interest include:</strong> Variational inference for state estimation, active inference for planning, FEP-based robot control, neural circuit models, distributionally robust control, impedance control under uncertainty, learning from demonstration via FEP, and connections between FEP and established control paradigms.</p>
       <p><strong>Submission deadline:</strong> TBA — Please check back or contact the organizers for updates.</p>
     </div>
-    <div class="spotlight-btns">
-      <a href="/cdn-cgi/l/email-protection#c1a9abf2f1f1f181afb8b4efa4a5b4feb2b4a3aba4a2b5fc848282f3f1f3f7e4f3f1878491e4f3f196aeb3aab2a9aeb1e4f3f1ece4f3f192b1aeb5ada8a6a9b5e4f3f192b4a3aca8b2b2a8aeafe7a3aea5b8fc85a4a0b3e4f3f18eb3a6a0afa8bba4b3b2e4f382e4f185e4f180e4f185e4f18088e4f3f1b6aeb4ada5e4f3f1ada8aaa4e4f3f1b5aee4f3f1b2b4a3aca8b5e4f3f1a0e4f3f1b2b1aeb5ada8a6a9b5e4f3f1b1b3a4b2a4afb5a0b5a8aeafe4f3f1a7aeb3e4f3f1b5a9a4e4f3f1878491e4f3f1a7aeb3e4f3f182aeafb5b3aeade4f3f1b6aeb3aab2a9aeb1e4f3f1a0b5e4f3f1848282e4f3f1f3f1f3f7efe4f185e4f180e4f185e4f18095a8b5ada4e4f280e4f185e4f18080b4b5a9aeb3b2e4f280e4f185e4f18080a7a7a8ada8a0b5a8aeafe4f280e4f185e4f180e4f185e4f18091ada4a0b2a4e4f3f1a7a8afa5e4f3f1b5a9a4e4f3f1a4b9b5a4afa5a4a5e4f3f1a0a3b2b5b3a0a2b5e4f3f1a0b5b5a0a2a9a4a5efe4f185e4f180e4f185e4f18083a4b2b5e4f3f1b3a4a6a0b3a5b2e4f382" class="btn">Submit Your Abstract</a>
-      <a href="/cdn-cgi/l/email-protection#21494b12111111614f58540f4445541e5254434b4442551c64626213111317041311676471041311764e534a52494e51041311684f5054485358" class="btn-outline">Contact Organizers</a>
-    </div>
+    <div class="spotlight-btns" id="spotlightBtns"></div>
   </div>
 </section>
 
@@ -299,7 +296,7 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // DATA
 const speakers = [
   { name:"Rodolphe Sepulchre", role:"Professor of Engineering", aff:"KU Leuven & University of Cambridge", talk:"A Neuromorphic Architecture for Event-based Interaction", time:"09:30 – 10:00", bio:"Fellow of IFAC, IEEE, and SIAM. Recipient of the IEEE CSS Antonio Ruberti Young Researcher Prize (2008) and IEEE CSS George S. Axelby Outstanding Paper Award (2020). Elected to the Royal Academy of Belgium (2013). Former Editor-in-Chief of IEEE Control Systems (2020–2024). Recipient of two ERC Advanced Grants and coordinator of the MSCA network ELEVATE (2026–2030).", initials:"RS", img:"images/rodolphe-sepulchre.jpg" },
@@ -321,11 +318,12 @@ const schedule = [
 ];
 
 const organizers = [
-  { name:"Hozefa Jesawada", role:"Postdoctoral Researcher", aff:"New York University Abu Dhabi", email:"hj3000@nyu.edu", initials:"HJ", img:"images/hozefa-jesawada.jpg" },
-  { name:"Abdalla Swikir", role:"Assistant Professor of Robotics", aff:"Mohamed bin Zayed University of AI", email:"abdalla.swikir@mbzuai.ae", initials:"AS", img:"images/abdalla-swikir.jpg" },
-  { name:"Fares Abu-Dakka", role:"Assistant Professor", aff:"New York University Abu Dhabi", email:"fa2656@nyu.edu", initials:"FA", img:"images/fares-abu-dakka.jpg" },
-  { name:"Giovanni Russo", role:"Associate Professor", aff:"University of Salerno", email:"giovarusso@unisa.it", initials:"GR", img:"images/giovanni-russo.jpg" }
+  { name:"Hozefa Jesawada", role:"Postdoctoral Researcher", aff:"New York University Abu Dhabi", email:["hj3000","nyu.edu"], initials:"HJ", img:"images/hozefa-jesawada.jpg" },
+  { name:"Abdalla Swikir", role:"Assistant Professor of Robotics", aff:"Mohamed bin Zayed University of AI", email:["abdalla.swikir","mbzuai.ac.ae"], initials:"AS", img:"images/abdalla-swikir.jpg" },
+  { name:"Fares Abu-Dakka", role:"Assistant Professor", aff:"New York University Abu Dhabi", email:["fa2656","nyu.edu"], initials:"FA", img:"images/fares-abu-dakka.jpg" },
+  { name:"Giovanni Russo", role:"Associate Professor", aff:"University of Salerno", email:["giovarusso","unisa.it"], initials:"GR", img:"images/giovanni-russo.jpg" }
 ];
+function getEmail(parts) { return parts[0] + String.fromCharCode(64) + parts[1]; }
 
 // COLORS FOR AVATARS
 const palette = ["#5eead4","#78c8dc","#f97316","#a78bfa","#fb7185","#fbbf24"];
@@ -335,75 +333,163 @@ function avatarColor(name) {
   return palette[Math.abs(h) % palette.length];
 }
 
+// IMAGE FALLBACK HELPER
+function createAvatar(src, alt, initials, className, col) {
+  const wrapper = document.createElement('div');
+  wrapper.className = className;
+  wrapper.style.background = 'linear-gradient(135deg, ' + col + ', var(--bg))';
+  const img = document.createElement('img');
+  img.src = src;
+  img.alt = alt;
+  img.onerror = function() {
+    this.remove();
+    wrapper.textContent = initials;
+  };
+  wrapper.appendChild(img);
+  return wrapper;
+}
+
 // RENDER SPEAKERS
-const speakersGrid = document.getElementById('speakersGrid');
-speakers.forEach((sp, i) => {
-  const col = avatarColor(sp.name);
-  const div = document.createElement('div');
-  div.className = 'card speaker-card';
-  div.innerHTML = `
-    <div class="speaker-header">
-      <div class="speaker-avatar" style="background: linear-gradient(135deg, ${col}, var(--bg));">
-        <img src="${sp.img}" alt="${sp.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='${sp.initials}';">
-      </div>
-      <div>
-        <div class="speaker-name">${sp.name}</div>
-        <div class="speaker-aff">${sp.role}, ${sp.aff}</div>
-      </div>
-    </div>
-    <div class="speaker-time">${sp.time}</div>
-    <div class="speaker-talk">${sp.talk}</div>
-    <div class="speaker-bio">${sp.bio}</div>
-    <div class="speaker-toggle">Click to read bio ▼</div>
-  `;
-  div.addEventListener('click', () => {
-    const wasExpanded = div.classList.contains('expanded');
-    document.querySelectorAll('.speaker-card').forEach(c => {
+var speakersGrid = document.getElementById('speakersGrid');
+speakers.forEach(function(sp) {
+  var col = avatarColor(sp.name);
+  var card = document.createElement('div');
+  card.className = 'card speaker-card';
+
+  var header = document.createElement('div');
+  header.className = 'speaker-header';
+
+  var avatar = createAvatar(sp.img, sp.name, sp.initials, 'speaker-avatar', col);
+  header.appendChild(avatar);
+
+  var info = document.createElement('div');
+  var nameEl = document.createElement('div');
+  nameEl.className = 'speaker-name';
+  nameEl.textContent = sp.name;
+  var affEl = document.createElement('div');
+  affEl.className = 'speaker-aff';
+  affEl.textContent = sp.role + ', ' + sp.aff;
+  info.appendChild(nameEl);
+  info.appendChild(affEl);
+  header.appendChild(info);
+  card.appendChild(header);
+
+  var timeEl = document.createElement('div');
+  timeEl.className = 'speaker-time';
+  timeEl.textContent = sp.time;
+  card.appendChild(timeEl);
+
+  var talkEl = document.createElement('div');
+  talkEl.className = 'speaker-talk';
+  talkEl.textContent = sp.talk;
+  card.appendChild(talkEl);
+
+  var bioEl = document.createElement('div');
+  bioEl.className = 'speaker-bio';
+  bioEl.textContent = sp.bio;
+  card.appendChild(bioEl);
+
+  var toggleEl = document.createElement('div');
+  toggleEl.className = 'speaker-toggle';
+  toggleEl.textContent = 'Click to read bio \u25BC';
+  card.appendChild(toggleEl);
+
+  card.addEventListener('click', function() {
+    var wasExpanded = card.classList.contains('expanded');
+    document.querySelectorAll('.speaker-card').forEach(function(c) {
       c.classList.remove('expanded');
-      c.querySelector('.speaker-toggle').textContent = 'Click to read bio ▼';
+      c.querySelector('.speaker-toggle').textContent = 'Click to read bio \u25BC';
     });
     if (!wasExpanded) {
-      div.classList.add('expanded');
-      div.querySelector('.speaker-toggle').textContent = 'Click to collapse ▲';
+      card.classList.add('expanded');
+      toggleEl.textContent = 'Click to collapse \u25B2';
     }
   });
-  speakersGrid.appendChild(div);
+
+  speakersGrid.appendChild(card);
 });
 
 // RENDER SCHEDULE
-const scheduleList = document.getElementById('scheduleList');
-schedule.forEach((item, i) => {
-  const div = document.createElement('div');
-  div.className = 'sched-row';
-  const timeClass = item.type === 'break' ? 'sched-time break' : 'sched-time';
-  const evClass = item.type === 'talk' ? 'sched-event' : item.type === 'break' ? 'sched-event break-ev' : 'sched-event session';
-  div.innerHTML = `
-    <div class="${timeClass}">${item.time}</div>
-    <div>
-      <div class="${evClass}">${item.event}</div>
-      ${item.speaker ? `<div class="sched-speaker">${item.speaker}</div>` : ''}
-    </div>
-  `;
-  scheduleList.appendChild(div);
+var scheduleList = document.getElementById('scheduleList');
+schedule.forEach(function(item) {
+  var row = document.createElement('div');
+  row.className = 'sched-row';
+
+  var timeDiv = document.createElement('div');
+  timeDiv.className = item.type === 'break' ? 'sched-time break' : 'sched-time';
+  timeDiv.textContent = item.time;
+  row.appendChild(timeDiv);
+
+  var contentDiv = document.createElement('div');
+  var eventDiv = document.createElement('div');
+  eventDiv.className = item.type === 'talk' ? 'sched-event' : item.type === 'break' ? 'sched-event break-ev' : 'sched-event session';
+  eventDiv.textContent = item.event;
+  contentDiv.appendChild(eventDiv);
+
+  if (item.speaker) {
+    var speakerDiv = document.createElement('div');
+    speakerDiv.className = 'sched-speaker';
+    speakerDiv.textContent = item.speaker;
+    contentDiv.appendChild(speakerDiv);
+  }
+
+  row.appendChild(contentDiv);
+  scheduleList.appendChild(row);
 });
 
 // RENDER ORGANIZERS
-const orgGrid = document.getElementById('orgGrid');
-organizers.forEach(o => {
-  const col = avatarColor(o.name);
-  const div = document.createElement('div');
-  div.className = 'card';
-  div.innerHTML = `
-    <div class="org-avatar" style="background: linear-gradient(135deg, ${col}, var(--bg));">
-      <img src="${o.img}" alt="${o.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='${o.initials}';">
-    </div>
-    <div class="org-name">${o.name}</div>
-    <div class="org-role">${o.role}</div>
-    <div class="org-aff">${o.aff}</div>
-    <a href="mailto:${o.email}" class="org-email">${o.email}</a>
-  `;
-  orgGrid.appendChild(div);
+var orgGrid = document.getElementById('orgGrid');
+organizers.forEach(function(o) {
+  var col = avatarColor(o.name);
+  var card = document.createElement('div');
+  card.className = 'card';
+
+  var avatar = createAvatar(o.img, o.name, o.initials, 'org-avatar', col);
+  card.appendChild(avatar);
+
+  var nameEl = document.createElement('div');
+  nameEl.className = 'org-name';
+  nameEl.textContent = o.name;
+  card.appendChild(nameEl);
+
+  var roleEl = document.createElement('div');
+  roleEl.className = 'org-role';
+  roleEl.textContent = o.role;
+  card.appendChild(roleEl);
+
+  var affEl = document.createElement('div');
+  affEl.className = 'org-aff';
+  affEl.textContent = o.aff;
+  card.appendChild(affEl);
+
+  var emailAddr = getEmail(o.email);
+  var emailLink = document.createElement('a');
+  emailLink.className = 'org-email';
+  emailLink.href = 'mailto:' + emailAddr;
+  emailLink.textContent = emailAddr;
+  card.appendChild(emailLink);
+
+  orgGrid.appendChild(card);
 });
+
+// RENDER SPOTLIGHT BUTTONS
+(function() {
+  var e = 'hj3000' + String.fromCharCode(64) + 'nyu.edu';
+  var subj1 = 'ECC2026 FEP Workshop - Spotlight Submission';
+  var body1 = 'Dear Organizers,%0D%0A%0D%0AI would like to submit a spotlight presentation for the FEP for Control workshop at ECC 2026.%0D%0A%0D%0ATitle:%0D%0AAuthors:%0D%0AAffiliation:%0D%0A%0D%0APlease find the extended abstract attached.%0D%0A%0D%0ABest regards,';
+  var subj2 = 'ECC2026 FEP Workshop Inquiry';
+  var container = document.getElementById('spotlightBtns');
+  var a1 = document.createElement('a');
+  a1.className = 'btn';
+  a1.href = 'mailto:' + e + '?subject=' + encodeURIComponent(subj1) + '&body=' + body1;
+  a1.textContent = 'Submit Your Abstract';
+  container.appendChild(a1);
+  var a2 = document.createElement('a');
+  a2.className = 'btn-outline';
+  a2.href = 'mailto:' + e + '?subject=' + encodeURIComponent(subj2);
+  a2.textContent = 'Contact Organizers';
+  container.appendChild(a2);
+})();
 
 // NAVIGATION
 function scrollToId(id) {
@@ -460,4 +546,27 @@ window.addEventListener('scroll', () => {
       if (n.y < 0 || n.y > canvas.offsetHeight) n.vy *= -1;
     });
     nodes.forEach((a, i) => {
-      for (le
+      for (var j = i + 1; j < nodes.length; j++) {
+        var b = nodes[j];
+        var d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < 140) {
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = 'rgba(120,200,220,' + (0.15 * (1 - d / 140)) + ')';
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+      ctx.beginPath();
+      ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(120,200,220,0.35)';
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
